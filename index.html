@@ -1020,22 +1020,23 @@
     }
 
     async function verifyPayment(reference) {
-      try {
-        const res  = await fetch('/api/verify', {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ reference })
-        });
-        const data = await res.json();
-        if (data.success) {
-          window.location.href = '/thank-you.html?ref=' + reference;
-        } else {
-          alert('Payment could not be verified. Please contact us with your reference: ' + reference);
-        }
-      } catch {
-        window.location.href = '/thank-you.html?ref=' + reference;
-      }
+  try {
+    const res  = await fetch('/api/verify', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ reference })
+    });
+    const data = await res.json();
+    if (data.success) {
+      const link = data.telegramLink ? encodeURIComponent(data.telegramLink) : '';
+      window.location.href = '/thank-you.html?ref=' + reference + '&tg=' + link;
+    } else {
+      alert('Payment could not be verified. Please contact us with your reference: ' + reference);
     }
+  } catch {
+    window.location.href = '/thank-you.html?ref=' + reference;
+  }
+}
   </script>
 </body>
 </html>

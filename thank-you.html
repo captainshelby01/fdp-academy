@@ -405,14 +405,26 @@
 
   </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get('ref');
-    if (ref) {
-      document.getElementById('refValue').textContent = ref;
-      document.getElementById('refBox').classList.add('visible');
-    }
-  </script>
+ <script>
+  const params = new URLSearchParams(window.location.search);
+  const ref    = params.get('ref');
+  const tg     = params.get('tg');
+
+  if (ref) {
+    document.getElementById('refDisplay').textContent = ref;
+  }
+
+  const btn     = document.getElementById('telegramBtn');
+  const loading = document.getElementById('loadingMsg');
+
+  if (tg && tg !== '') {
+    btn.href = decodeURIComponent(tg);
+    btn.style.display = 'flex';
+  } else {
+    loading.textContent = '⚠️ Could not generate your invite link. Please contact us with your payment reference to be added to the group.';
+    loading.classList.add('visible');
+  }
+</script>
 
 </body>
 </html>
