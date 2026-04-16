@@ -958,10 +958,16 @@
     const PUBLIC_KEY = 'pk_live_0182580082d9932a4456928ab6adaf0c68dd657c';
     let currentPlan = 'total';
 
-    const plans = {
-      total:      { label: 'Total Package (All 10 Skills)', amount: 20000 },
-      individual: { label: 'Individual Skill Package',      amount: 5000  }
-    };
+    // WITH THIS:
+function grossUp(desired) {
+  // Paystack fee: 1.5% + ₦100 — grossed up so customer pays the fee
+  return Math.ceil((desired + 100) / 0.985);
+}
+
+const plans = {
+  total:      { label: 'Total Package (All 10 Skills)', amount: grossUp(20000) },
+  individual: { label: 'Individual Skill Package',      amount: grossUp(5000)  }
+};
 
     function openModal(plan) {
       currentPlan = plan;
